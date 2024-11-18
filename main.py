@@ -32,7 +32,7 @@ class JsonExporter:
         file_list = zipfile.ZipFile(_file, 'r')
         for _file in file_list.namelist():
             if "en_us.json" in _file:
-                print(_file)
+                print(f'[@] Working : {_file}')
                 try:
                     json_file = json.loads(file_list.read(_file))
                 except:
@@ -40,7 +40,6 @@ class JsonExporter:
                     
                 file_list.close()
                 return json_file ,_file
-        print("Here is no Language file")
 
     def translate(self, _json_data :dict="Json File"):
         result = _json_data.copy()
@@ -48,7 +47,7 @@ class JsonExporter:
             try:
                 result[_key] = self.translator.translate(_json_data[_key], src="en", dest="ko").text
             except:
-                print("아 걱정마세요. 평범한 에러메세지입니다. 무료버전의 한계니 그냥 넘어가도록하죠.")
+                print(f'[!] {_key} 를 처리하다가 에러가 발생!')
                 result[_key] = _json_data[_key]
         return result
 
